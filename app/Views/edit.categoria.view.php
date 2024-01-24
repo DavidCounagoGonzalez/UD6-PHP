@@ -1,10 +1,6 @@
 <!-- Content Row -->
 
 <div class="row">
-    <?php
-    $actual = $categoria[0];
-    $controller = new \Com\Daw2\Controllers\CategoriaController();
-    ?>
     <div class="col-12">
         <div class="card shadow mb-4">
             <div
@@ -17,32 +13,20 @@
                     <!--form method="get"-->
                     <div class="row">                        
                         <input id="id_categoria" type="hidden" name="id_categoria"value="<?php echo isset($input['id_categoria']) ? $input['id_categoria'] : $actual['id_categoria']; ?>"/>                            
-                        <div class="mb-3 col-sm-5">
+                        <div class="mb-3 col-sm-6">
                             <label for="codigo">Nombre</label>
                             <input class="form-control" id="nombre_categoria" type="text" name="nombre_categoria" placeholder="<?php echo $actual['nombre_categoria'] ?>" value="<?php echo isset($input['nombre_categoria']) ? $input['nombre_categoria'] : $actual['nombre_categoria']; ?>" required>
                             <p class="text-danger"><?php echo isset($errores['nombre_categoria']) ? $errores['nombre_categoria'] : ''; ?></p>
                         </div>
-                        <div class="mb-3 col-sm-4">
+                        <div class="mb-3 col-sm-6">
                             <label for="nombre">Categoría Padre</label>
-                            <select class="form-control select2-container--default" name="id_padre">
+                            <select class="form-control" name="id_padre">
+                                <option value="" selected>-</option>                                
                                 <?php
-                                if ($actual['id_padre'] !== null) {
+                                foreach ($categorias as $c) {
                                     ?>
-                                    <option value="<?php $actual['id_padre'] ?>" selected><?php echo $controller->getNombreCategoria($actual['id_padre']); ?> </option>
+                                    <option value="<?php echo $c['id_categoria'] ?>" <?php echo (isset($actual['id_padre']) && $actual['id_padre'] == $c['id_categoria']) ? 'selected' : ''; ?>><?php echo $c['fullName']; ?></option>
                                     <?php
-                                } else {
-                                    ?>
-                                    <option value="" selected>[Sin categoría padre] </option>
-                                    <?php
-                                }
-                                ?>
-                                <?php
-                                if (count($categorias) > 0) {
-                                    foreach ($categorias as $c) {
-                                        ?>
-                                        <option value="<?php echo $c['id_categoria'] ?>"><?php echo $c['id_categoria'] . ': ' . $c['nombre_categoria'] ?></option>
-                                        <?php
-                                    }
                                 }
                                 ?>
                             </select>

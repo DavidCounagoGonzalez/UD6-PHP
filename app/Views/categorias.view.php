@@ -33,7 +33,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>                                                                                   
-                                <th>Categoría Padre</th>
+                                <th>Ruta completa</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -9,11 +9,20 @@ class CategoriaModel extends \Com\Daw2\Core\BaseModel {
     function getAll(): array {
         $stmt = $this->pdo->query('SELECT * FROM categoria');
         $res = [];
-        foreach( $stmt->fetchAll() as $c){
-            $c = $this->categoriaWithParents($c);
-            $res[] = $c;
+        foreach($stmt->fetchAll() as $c){
+            $res[] = $this->rowAddPadre($c);
         }
-        echo $res;
+        return $res;
+    }
+    
+    function getAllMinus(int $id): array {
+        $stmt = $this->pdo->prepare('SELECT * FROM categoria WHERE id_categoria != :id');
+        $stmt->execute(['id' => $id]);
+        $res = [];
+        foreach($stmt->fetchAll() as $c){
+            $res[] = $this->rowAddPadre($c);
+        }
+        return $res;
     }
     
     function size() : int {
@@ -98,11 +107,10 @@ class CategoriaModel extends \Com\Daw2\Core\BaseModel {
         return $stmt->fetchAll();
     }
 
-    function edit(string $id, string $nombre, string $id_padre, string $idOriginal): bool {
-        try {
-            $id_padre = (!is_int($id_padre)) ? null : $id_padre;
-            $stmt = $this->pdo->prepare('UPDATE categoria SET id_categoria=?, nombre_categoria=?, id_padre=? WHERE id_categoria=?');
-            return $stmt->execute([$id, $nombre, $id_padre, $idOriginal]);
+    function edit(int $id, string $nombre, ?int $id_padre): bool {
+        try {            
+            $stmt = $this->pdo->prepare('UPDATE categoria SET nombre_categoria=?, id_padre=? WHERE id_categoria=?');
+            return $stmt->execute([$nombre, $id_padre, $id]);
         } catch (PDOException $ex) {
             echo "cant update for some reason: " . $ex->getMessage();
             return false;

@@ -12,11 +12,8 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
         $data['seccion'] = '/categorias';
         
         $modelo = new \Com\Daw2\Models\CategoriaModel();
-        $aux = $modelo->getAll();        
-        $res = [];
-        foreach($aux as $c){
-            $res[] = $modelo->loadCategoria($c['id_categoria']);
-        }
+        $res = $modelo->getAll();        
+
         //var_dump($res); die();
         $data['categorias'] = $res;
 
@@ -43,12 +40,14 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
         $this->view->showViews(array('templates/header.view.php', 'add.categoria.view.php', 'templates/footer.view.php'), $data);
     }
 
-    function mostrarEdit($id) {
+    function mostrarEdit(int $id) {
         $data = [];
         $modelo = new \Com\Daw2\Models\CategoriaModel();
+        $categoria = $modelo->loadCategoria($id);
         $data['categorias'] = $modelo->getAllCategorias();
-        $data['titulo'] = 'Categoría ' . $this->getNombreCategoria($id) . ' con ID: ' . $id;
-        $data['categoria'] = $modelo->showEdit($id);
+        $data['titulo'] = 'Categoría ' . $categoria['fullName'];
+        $data['actual'] = $categoria;
+        $data['categorias'] = $modelo->getAllMinus($id);
         $this->view->showViews(array('templates/header.view.php', 'edit.categoria.view.php', 'templates/footer.view.php'), $data);
     }
 
@@ -112,14 +111,15 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
         $this->view->showViews(array('templates/header.view.php', 'add.categoria.view.php', 'templates/footer.view.php'), $data);
     }
 
-    function edit($id): void {
+    function edit(int $id): void {
         $data = [];
         $data['titulo'] = 'Categoria con ID ' . $id;
         $data['seccion'] = '/categoria/edit/' . $id;
         $data['errores'] = $this->checkFormAdd($_POST);
         if (count($data['errores']) === 0) {
             $modelo = new \Com\Daw2\Models\CategoriaModel();
-            $result = $modelo->edit($_POST['id_categoria'], $_POST['nombre_categoria'], $_POST['id_padre'], $id);
+            $idPadre = filter_var($_POST['id_padre'], FILTER_VALIDATE_INT) ? (int)$_POST['id_padre'] : null;
+            $result = $modelo->edit($id, $_POST['nombre_categoria'], $idPadre);
             if ($result) {
                 header('Location: /categorias');
             } else {
