@@ -13,53 +13,7 @@ class FrontController {
                 $controlador = new \Com\Daw2\Controllers\InicioController();
                 $controlador->index();
             }
-            , 'get');
-
-        # Ejemplos Cookies y Sesiones:
-
-        Route::add('/dark',
-                function () {
-                    $controlador = new \Com\Daw2\Controllers\CookiesController();
-                    $controlador->darkMode();
-                }
-                , 'get');
-
-        Route::add('/light',
-                function () {
-                    $controlador = new \Com\Daw2\Controllers\CookiesController();
-                    $controlador->lightMode();
-                }
-                , 'get');
-
-    
-
-        Route::add('/session/borrar',
-                function () {
-                    $controlador = new \Com\Daw2\Controllers\SessionController();
-                    $controlador->borrarVariableSession();
-                }
-                , 'get');
-            
-        Route::add('/profile/([A-Za-z0-9]+)',
-                    function ($id) {
-                        $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                        $controlador->profile($id);
-                    }
-                    , 'get');
-                
-        Route::add('/profile/edit/([A-Za-z0-9]+)',
-                function ($id) {
-                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                    $controlador->mostrarEditProfile($id);
-                }
-                , 'get');
-
-        Route::add('/profile/edit/([A-Za-z0-9]+)',
-                function ($id) {
-                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                    $controlador->editProfile($id);
-                }
-                , 'post');
+            , 'get');                           
                                               
         # Gestion de categorías           
         Route::add('/categorias',

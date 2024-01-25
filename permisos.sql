@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 25-01-2024 a las 11:16:24
+-- Tiempo de generación: 25-01-2024 a las 12:36:27
 -- Versión del servidor: 10.6.7-MariaDB-2ubuntu1.1
 -- Versión de PHP: 8.1.9
 
@@ -1322,7 +1322,6 @@ CREATE TABLE `usuario_sistema` (
   `nombre` varchar(255) DEFAULT NULL,
   `last_date` datetime DEFAULT NULL,
   `id_idioma` int(10) UNSIGNED NOT NULL DEFAULT 1,
-  `idioma` char(2) DEFAULT 'es',
   `baja` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
 
@@ -1330,12 +1329,12 @@ CREATE TABLE `usuario_sistema` (
 -- Volcado de datos para la tabla `usuario_sistema`
 --
 
-INSERT INTO `usuario_sistema` (`id_usuario`, `id_rol`, `email`, `pass`, `nombre`, `last_date`, `id_idioma`, `idioma`, `baja`) VALUES
-(1, 1, 'admin@test.org', '$2y$10$TJT6xNw969TJofF1cRkoju9OyCWaUmD2nlwFAAWSMfC1Cn3p4jqwK', 'Administrador', '2023-02-18 11:05:24', 1, 'es', 0),
-(93, 2, 'productos@test.org', '$2y$10$HJXZ3E6yUoOCEDMafNad7OF.ZSyxFN20475sJqd51lL6/6oEHnOY6', 'Productos', NULL, 2, 'es', 0),
-(94, 3, 'categorias@test.org', '$2y$10$epmX0vCofI/P5e9TmUhxHu4hgJqfn4L4RMAV0NjmBe6otGtgNqs1C', 'Categorias', NULL, 2, 'es', 1),
-(95, 5, 'auditor@test.org', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'Auditor', '2023-02-18 11:05:46', 3, 'es', 0),
-(96, 4, 'proveedor@test.org', '$2y$10$x4d0OIU/fzjO7KHwl7ZHouWAEXqHWTYAOr9ErTvevgUB.3jmzWHB.', 'Proveedor', '2023-02-17 13:06:44', 1, 'es', 1);
+INSERT INTO `usuario_sistema` (`id_usuario`, `id_rol`, `email`, `pass`, `nombre`, `last_date`, `id_idioma`, `baja`) VALUES
+(1, 1, 'admin@test.org', '$2y$10$TJT6xNw969TJofF1cRkoju9OyCWaUmD2nlwFAAWSMfC1Cn3p4jqwK', 'Administrador', '2023-02-18 11:05:24', 1, 0),
+(93, 2, 'productos@test.org', '$2y$10$HJXZ3E6yUoOCEDMafNad7OF.ZSyxFN20475sJqd51lL6/6oEHnOY6', 'Productos', NULL, 2, 0),
+(94, 3, 'categorias@test.org', '$2y$10$epmX0vCofI/P5e9TmUhxHu4hgJqfn4L4RMAV0NjmBe6otGtgNqs1C', 'Categorias', NULL, 2, 1),
+(95, 5, 'auditor@test.org', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'Auditor', '2023-02-18 11:05:46', 3, 0),
+(96, 4, 'proveedor@test.org', '$2y$10$x4d0OIU/fzjO7KHwl7ZHouWAEXqHWTYAOr9ErTvevgUB.3jmzWHB.', 'Proveedor', '2023-02-17 13:06:44', 1, 1);
 
 --
 -- Índices para tablas volcadas
