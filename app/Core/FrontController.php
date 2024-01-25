@@ -181,6 +181,13 @@ class FrontController {
                     $controlador->cant_add();
                 }
                 , 'get');
+                
+        Route::add('/usuarios-sistema',
+                function () {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->mostrarTodos();
+                }
+                , 'get');
 
 
         Route::pathNotFound(
