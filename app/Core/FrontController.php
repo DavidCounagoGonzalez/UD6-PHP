@@ -196,7 +196,6 @@ class FrontController {
                     $controller->error405();
                 }
         );
-        
         Route::run();
     }
 
