@@ -56,7 +56,8 @@
                             <td><?php echo $p['codigo']; ?></td>
                             <td><?php echo $p['nombre']; ?> <a href="<?php echo $p['website']; ?>" target="_blank"><i class="text-sm ml-1 fas fa-external-link-alt"></i></a></td>
                             <td><a href="mailto:<?php echo $p['email']; ?>"><?php echo $p['email']; ?></a></td>                           
-                            <td>                                                           
+                            <td>  
+                                <a href="/proveedores/view/<?php echo $p['cif']; ?>" class="btn btn-default ml-1"><i class="fas fa-eye"></i></a>
                                 <a href="/proveedores/edit/<?php echo urlencode($p['cif']); ?>" class="btn btn-success ml-1"><i class="fas fa-edit"></i></a>                                
                                 <a href="/proveedores/delete/<?php echo urlencode($p['cif']); ?>" class="btn btn-danger ml-1"><i class="fas fa-trash"></i></a>                                
                             </td>

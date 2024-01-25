@@ -44,7 +44,8 @@
                                     <td><?php echo $c['id_categoria']; ?></td>
                                     <td><?php echo $c['nombre_categoria']; ?></td>                                     
                                     <td><?php echo $c['fullName']; ?></td>   
-                                    <td>                                                                                
+                                    <td> 
+                                        <a href="/categorias/view/<?php echo $c['id_categoria']; ?>" class="btn btn-default ml-1"><i class="fas fa-eye"></i></a>
                                         <a href="/categorias/edit/<?php echo $c['id_categoria']; ?>" class="btn btn-success ml-1"><i class="fas fa-edit"></i></a>
                                         <a href="/categorias/delete/<?php echo $c['id_categoria']; ?>" class="btn btn-danger ml-1"><i class="fas fa-trash"></i></a>
                                     </td>

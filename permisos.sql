@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5deb2
+-- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Xerado en: 18 de Feb de 2023 ás 11:05
--- Versión do servidor: 10.3.37-MariaDB-0ubuntu0.20.04.1
--- Versión do PHP: 7.4.33
+-- Tiempo de generación: 25-01-2024 a las 11:16:24
+-- Versión del servidor: 10.6.7-MariaDB-2ubuntu1.1
+-- Versión de PHP: 8.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,16 +24,36 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da táboa `aux_rol`
+-- Estructura de tabla para la tabla `aux_idiomas`
+--
+
+CREATE TABLE `aux_idiomas` (
+  `id_idioma` int(10) UNSIGNED NOT NULL,
+  `nombre_idioma` varchar(100) COLLATE utf8mb4_unicode_520_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+--
+-- Volcado de datos para la tabla `aux_idiomas`
+--
+
+INSERT INTO `aux_idiomas` (`id_idioma`, `nombre_idioma`) VALUES
+(1, 'Galego'),
+(2, 'Español'),
+(3, 'Inglés');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `aux_rol`
 --
 
 CREATE TABLE `aux_rol` (
   `id_rol` int(11) NOT NULL,
   `nombre_rol` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- A extraer os datos da táboa `aux_rol`
+-- Volcado de datos para la tabla `aux_rol`
 --
 
 INSERT INTO `aux_rol` (`id_rol`, `nombre_rol`) VALUES
@@ -47,24 +66,24 @@ INSERT INTO `aux_rol` (`id_rol`, `nombre_rol`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da táboa `categoria`
+-- Estructura de tabla para la tabla `categoria`
 --
 
 CREATE TABLE `categoria` (
   `id_categoria` int(11) NOT NULL,
   `nombre_categoria` varchar(50) NOT NULL,
   `id_padre` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- A extraer os datos da táboa `categoria`
+-- Volcado de datos para la tabla `categoria`
 --
 
 INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `id_padre`) VALUES
 (3, 'Videojuegos', NULL),
 (4, 'Microsoft', 3),
 (5, 'Nintendo', 3),
-(7, 'Sony', 3),
+(7, 'Sony', NULL),
 (13, 'Telefonía', NULL),
 (14, 'Android', 13),
 (15, 'iOS', 13),
@@ -73,7 +92,7 @@ INSERT INTO `categoria` (`id_categoria`, `nombre_categoria`, `id_padre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da táboa `log`
+-- Estructura de tabla para la tabla `log`
 --
 
 CREATE TABLE `log` (
@@ -81,10 +100,10 @@ CREATE TABLE `log` (
   `operacion` varchar(50) NOT NULL,
   `tabla` varchar(50) NOT NULL,
   `detalle` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- A extraer os datos da táboa `log`
+-- Volcado de datos para la tabla `log`
 --
 
 INSERT INTO `log` (`id_log`, `operacion`, `tabla`, `detalle`) VALUES
@@ -97,7 +116,7 @@ INSERT INTO `log` (`id_log`, `operacion`, `tabla`, `detalle`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da táboa `producto`
+-- Estructura de tabla para la tabla `producto`
 --
 
 CREATE TABLE `producto` (
@@ -110,10 +129,10 @@ CREATE TABLE `producto` (
   `stock` int(11) NOT NULL,
   `iva` int(11) NOT NULL,
   `id_categoria` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- A extraer os datos da táboa `producto`
+-- Volcado de datos para la tabla `producto`
 --
 
 INSERT INTO `producto` (`codigo`, `nombre`, `descripcion`, `proveedor`, `coste`, `margen`, `stock`, `iva`, `id_categoria`) VALUES
@@ -1144,7 +1163,7 @@ INSERT INTO `producto` (`codigo`, `nombre`, `descripcion`, `proveedor`, `coste`,
 -- --------------------------------------------------------
 
 --
--- Estrutura da táboa `proveedor`
+-- Estructura de tabla para la tabla `proveedor`
 --
 
 CREATE TABLE `proveedor` (
@@ -1156,10 +1175,10 @@ CREATE TABLE `proveedor` (
   `pais` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
   `telefono` varchar(12) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- A extraer os datos da táboa `proveedor`
+-- Volcado de datos para la tabla `proveedor`
 --
 
 INSERT INTO `proveedor` (`cif`, `codigo`, `nombre`, `direccion`, `website`, `pais`, `email`, `telefono`) VALUES
@@ -1268,7 +1287,7 @@ INSERT INTO `proveedor` (`cif`, `codigo`, `nombre`, `direccion`, `website`, `pai
 -- --------------------------------------------------------
 
 --
--- Estrutura da táboa `rol`
+-- Estructura de tabla para la tabla `rol`
 --
 
 CREATE TABLE `rol` (
@@ -1278,10 +1297,10 @@ CREATE TABLE `rol` (
   `descripcion_es` text DEFAULT NULL,
   `orden` int(255) DEFAULT NULL,
   `seccion_ini` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 
 --
--- A extraer os datos da táboa `rol`
+-- Volcado de datos para la tabla `rol`
 --
 
 INSERT INTO `rol` (`id_rol`, `rol`, `descripcion_en`, `descripcion_es`, `orden`, `seccion_ini`) VALUES
@@ -1292,7 +1311,7 @@ INSERT INTO `rol` (`id_rol`, `rol`, `descripcion_en`, `descripcion_es`, `orden`,
 -- --------------------------------------------------------
 
 --
--- Estrutura da táboa `usuario_sistema`
+-- Estructura de tabla para la tabla `usuario_sistema`
 --
 
 CREATE TABLE `usuario_sistema` (
@@ -1302,46 +1321,53 @@ CREATE TABLE `usuario_sistema` (
   `pass` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `last_date` datetime DEFAULT NULL,
+  `id_idioma` int(10) UNSIGNED NOT NULL DEFAULT 1,
   `idioma` char(2) DEFAULT 'es',
   `baja` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
 
 --
--- A extraer os datos da táboa `usuario_sistema`
+-- Volcado de datos para la tabla `usuario_sistema`
 --
 
-INSERT INTO `usuario_sistema` (`id_usuario`, `id_rol`, `email`, `pass`, `nombre`, `last_date`, `idioma`, `baja`) VALUES
-(1, 1, 'admin@test.org', '$2y$10$TJT6xNw969TJofF1cRkoju9OyCWaUmD2nlwFAAWSMfC1Cn3p4jqwK', 'Administrador', '2023-02-18 11:05:24', 'es', 0),
-(93, 2, 'productos@test.org', '$2y$10$HJXZ3E6yUoOCEDMafNad7OF.ZSyxFN20475sJqd51lL6/6oEHnOY6', 'Productos', NULL, 'es', 0),
-(94, 3, 'categorias@test.org', '$2y$10$epmX0vCofI/P5e9TmUhxHu4hgJqfn4L4RMAV0NjmBe6otGtgNqs1C', 'Categorias', NULL, 'es', 1),
-(95, 5, 'auditor@test.org', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'Auditor', '2023-02-18 11:05:46', 'es', 0),
-(96, 4, 'proveedor@test.org', '$2y$10$x4d0OIU/fzjO7KHwl7ZHouWAEXqHWTYAOr9ErTvevgUB.3jmzWHB.', 'Proveedor', '2023-02-17 13:06:44', 'es', 1);
+INSERT INTO `usuario_sistema` (`id_usuario`, `id_rol`, `email`, `pass`, `nombre`, `last_date`, `id_idioma`, `idioma`, `baja`) VALUES
+(1, 1, 'admin@test.org', '$2y$10$TJT6xNw969TJofF1cRkoju9OyCWaUmD2nlwFAAWSMfC1Cn3p4jqwK', 'Administrador', '2023-02-18 11:05:24', 1, 'es', 0),
+(93, 2, 'productos@test.org', '$2y$10$HJXZ3E6yUoOCEDMafNad7OF.ZSyxFN20475sJqd51lL6/6oEHnOY6', 'Productos', NULL, 2, 'es', 0),
+(94, 3, 'categorias@test.org', '$2y$10$epmX0vCofI/P5e9TmUhxHu4hgJqfn4L4RMAV0NjmBe6otGtgNqs1C', 'Categorias', NULL, 2, 'es', 1),
+(95, 5, 'auditor@test.org', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'Auditor', '2023-02-18 11:05:46', 3, 'es', 0),
+(96, 4, 'proveedor@test.org', '$2y$10$x4d0OIU/fzjO7KHwl7ZHouWAEXqHWTYAOr9ErTvevgUB.3jmzWHB.', 'Proveedor', '2023-02-17 13:06:44', 1, 'es', 1);
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `aux_rol`
+-- Indices de la tabla `aux_idiomas`
+--
+ALTER TABLE `aux_idiomas`
+  ADD PRIMARY KEY (`id_idioma`);
+
+--
+-- Indices de la tabla `aux_rol`
 --
 ALTER TABLE `aux_rol`
   ADD PRIMARY KEY (`id_rol`);
 
 --
--- Indexes for table `categoria`
+-- Indices de la tabla `categoria`
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`id_categoria`),
   ADD KEY `FK_PADRE_CATEGORIA` (`id_padre`);
 
 --
--- Indexes for table `log`
+-- Indices de la tabla `log`
 --
 ALTER TABLE `log`
   ADD PRIMARY KEY (`id_log`,`operacion`,`tabla`);
 
 --
--- Indexes for table `producto`
+-- Indices de la tabla `producto`
 --
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`codigo`),
@@ -1349,81 +1375,89 @@ ALTER TABLE `producto`
   ADD KEY `FK_categoria` (`id_categoria`);
 
 --
--- Indexes for table `proveedor`
+-- Indices de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
   ADD PRIMARY KEY (`cif`);
 
 --
--- Indexes for table `rol`
+-- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
   ADD PRIMARY KEY (`id_rol`);
 
 --
--- Indexes for table `usuario_sistema`
+-- Indices de la tabla `usuario_sistema`
 --
 ALTER TABLE `usuario_sistema`
   ADD PRIMARY KEY (`id_usuario`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD KEY `FK_usuario_rol` (`id_rol`);
+  ADD KEY `FK_usuario_rol` (`id_rol`),
+  ADD KEY `usuario_sistema_aux_idiomas_FK` (`id_idioma`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `aux_rol`
+-- AUTO_INCREMENT de la tabla `aux_idiomas`
+--
+ALTER TABLE `aux_idiomas`
+  MODIFY `id_idioma` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `aux_rol`
 --
 ALTER TABLE `aux_rol`
   MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `categoria`
+-- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
--- AUTO_INCREMENT for table `log`
+-- AUTO_INCREMENT de la tabla `log`
 --
 ALTER TABLE `log`
   MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `rol`
+-- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
   MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `usuario_sistema`
+-- AUTO_INCREMENT de la tabla `usuario_sistema`
 --
 ALTER TABLE `usuario_sistema`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
--- Restricións para os envorcados das táboas
+-- Restricciones para tablas volcadas
 --
 
 --
--- Restricións para a táboa `categoria`
+-- Filtros para la tabla `categoria`
 --
 ALTER TABLE `categoria`
   ADD CONSTRAINT `FK_PADRE_CATEGORIA` FOREIGN KEY (`id_padre`) REFERENCES `categoria` (`id_categoria`) ON UPDATE CASCADE;
 
 --
--- Restricións para a táboa `producto`
+-- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `FK_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`),
   ADD CONSTRAINT `FK_proveedor` FOREIGN KEY (`proveedor`) REFERENCES `proveedor` (`cif`);
 
 --
--- Restricións para a táboa `usuario_sistema`
+-- Filtros para la tabla `usuario_sistema`
 --
 ALTER TABLE `usuario_sistema`
-  ADD CONSTRAINT `FK_usuario_rol` FOREIGN KEY (`id_rol`) REFERENCES `aux_rol` (`id_rol`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_usuario_rol` FOREIGN KEY (`id_rol`) REFERENCES `aux_rol` (`id_rol`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuario_sistema_aux_idiomas_FK` FOREIGN KEY (`id_idioma`) REFERENCES `aux_idiomas` (`id_idioma`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

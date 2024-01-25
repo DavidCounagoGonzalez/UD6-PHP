@@ -48,9 +48,10 @@
                             <td><?php echo $p['nombre_categoria']; ?></td>                            
                             <td><?php echo $p['codigo_proveedor']; ?></td>   
                             <td><?php echo number_format($p['pvp'], 2, ',', '.'); ?></td>                                                                             
-                            <td>                                                                                                                      
-                                <a href="/productos/edit/<?php echo urlencode($p['codigo']); ?>" class="btn btn-success ml-1"><i class="fas fa-edit"></i></a>
-                                <a href="/productos/delete/<?php echo urlencode($p['codigo']); ?>" class="btn btn-danger ml-1"><i class="fas fa-trash"></i></a>
+                            <td>                              
+                                <a href="/productos/view/<?php echo $p['codigo']; ?>" class="btn btn-default ml-1"><i class="fas fa-eye"></i></a>
+                                <a href="/productos/edit/<?php echo $p['codigo']; ?>" class="btn btn-success ml-1"><i class="fas fa-edit"></i></a>
+                                <a href="/productos/delete/<?php echo $p['codigo']; ?>" class="btn btn-danger ml-1"><i class="fas fa-trash"></i></a>
                             </td>
 
                         </tr>

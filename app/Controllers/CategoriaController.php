@@ -25,19 +25,13 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
         return $modelo->size();
     }
 
-    function getNombreCategoria(string $id): string {
-        $modelo = new \Com\Daw2\Models\CategoriaModel();
-        $toret =  $modelo->getNombreCategoria($id)[0];
-        return $toret['nombre_categoria'];
-    }
-
     function mostrarAdd() {
         $data = [];
         $data['titulo'] = 'Nueva categoría';
         $data['seccion'] = '/categorias/add';
         $modelo = new \Com\Daw2\Models\CategoriaModel();
         $data['categorias'] = $modelo->getAllCategorias();
-        $this->view->showViews(array('templates/header.view.php', 'add.categoria.view.php', 'templates/footer.view.php'), $data);
+        $this->view->showViews(array('templates/header.view.php', 'edit.categoria.view.php', 'templates/footer.view.php'), $data);
     }
 
     function mostrarEdit(int $id) {
@@ -46,7 +40,7 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
         $categoria = $modelo->loadCategoria($id);
         $data['categorias'] = $modelo->getAllCategorias();
         $data['titulo'] = 'Categoría ' . $categoria['fullName'];
-        $data['actual'] = $categoria;
+        $data['input'] = $categoria;
         $data['categorias'] = $modelo->getAllMinus($id);
         $this->view->showViews(array('templates/header.view.php', 'edit.categoria.view.php', 'templates/footer.view.php'), $data);
     }
@@ -73,11 +67,11 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
         $this->view->showViews(array('templates/header.view.php', 'detail.categoria.view.php', 'templates/footer.view.php'), $data);
     }
 
-    function view(string $id) {
+    function view(int $id) {
         $data = [];
         $modelo = new \Com\Daw2\Models\CategoriaModel();
-        $data['titulo'] = 'Categoría ' . $this->getNombreCategoria($id) . ' con ID: ' . $id;
-        $data['categorias'] = $modelo->view($id);
+        $data['actual'] = $modelo->loadCategoria($id);
+        $data['titulo'] = 'Categoría ' . $data['actual']['nombre_categoria'] . ' con ID: ' . $id;        
 
         $this->view->showViews(array('templates/header.view.php', 'detail.categoria.view.php', 'templates/footer.view.php'), $data);
     }
@@ -87,20 +81,21 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
         $data['titulo'] = 'Nueva Categoría';
         $data['seccion'] = '/categorias/add';
         $data['errores'] = $this->checkFormAdd($_POST);
-        if (count($data['errores']) === 0) {
-            $modelo = new \Com\Daw2\Models\CategoriaModel();
-            $result = $modelo->add($_POST['id_categoria'], $_POST['nombre_categoria'], $_POST['id_padre']);
+        $modelo = new \Com\Daw2\Models\CategoriaModel();
+        //var_dump($data['errores']);die;
+        if (count($data['errores']) === 0) {            
+            $idPadre = (is_null($_POST['id_padre'])) ? null : (int)$_POST['id_padre'];
+            $result = $modelo->add((int)$_POST['id_categoria'], $_POST['nombre_categoria'], $idPadre);
 
             if ($result == 1) {
                 header('Location: /categorias');
-            } else if ($result == 0) {
-                header('Location: /categorias/cant_add');
             } else {
-                header('location: methodNotAllowed');
-            }
+                header('Location: /categorias/cant_add');
+            } 
         } else {
+            $data['categorias'] = $modelo->getAllCategorias();
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $this->view->showViews(array('templates/header-datatable.view.php', 'add.categoria.view.php', 'templates/footer-datatable.view.php'), $data);
+            $this->view->showViews(array('templates/header-datatable.view.php', 'edit.categoria.view.php', 'templates/footer-datatable.view.php'), $data);
         }
     }
 
@@ -127,6 +122,8 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
             }
         } else {
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $modelo = new \Com\Daw2\Models\CategoriaModel();
+            $data['categorias'] = $modelo->getAllMinus($id);
             $this->view->showViews(array('templates/header-datatable.view.php', 'edit.categoria.view.php', 'templates/footer-datatable.view.php'), $data);
         }
     }
@@ -143,12 +140,7 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
 
     function checkFormAdd(array $post): array {
         $errores = [];
-        if (empty($post['id_categoria'])) {
-            $errores['id_categoria'] = "Campo obligatorio";
-        } else if (!preg_match("/[0-9]{1,11}/", $post['id_categoria'])) {
-            $errores['id_categoria'] = "El ID solo puede contener números enteros hasta 11 cifras como máximo.";
-        }
-
+        
         if (empty($post['nombre_categoria'])) {
             $errores['nombre_categoria'] = "Campo obligatorio";
         }

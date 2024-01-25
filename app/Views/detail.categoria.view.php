@@ -1,10 +1,6 @@
 <!-- Content Row -->
 
-<div class="row">
-    <?php 
-    $actual = $categorias[0];
-     $controller = new \Com\Daw2\Controllers\CategoriaController();
-     ?>
+<div class="row">    
     <div class="col-12">
         <div class="card shadow mb-4">
             <div
@@ -24,17 +20,9 @@
                             <input class="form-control-plaintext" id="nombre_categoria" type="text" name="nombre_categoria" placeholder="<?php echo $actual['nombre_categoria'] ?>" disabled>
                         </div>
                         <div class="mb-3 col-sm-2">
-                            <label for="id_padre">ID Padre</label>
-                            <input class="form-control-plaintext" id="id_padre" type="text" name="id_padre" placeholder="<?php echo $actual['id_padre'] ?>" disabled>                         
-                        </div>
-                        <div class="mb-3 col-sm-4">
-                            <label>Nombre Padre</label>
-                            <input class="form-control-plaintext" type="text"placeholder="<?php 
-                                 if ($actual['id_padre'] !== null) {
-                                     echo $controller->getNombreCategoria($actual['id_padre']);
-                                 }
-                            ?>" disabled>                         
-                        </div>
+                            <label for="id_padre">Ruta completa</label>
+                            <input class="form-control-plaintext" id="id_padre" type="text" name="id_padre" placeholder="<?php echo $actual['fullName'] ?>" disabled>                         
+                        </div>                        
 
                         <div class="mb-3 col-sm-9"></div>
                     <div class="mb-3 m-1">

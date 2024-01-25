@@ -54,51 +54,11 @@ class CategoriaModel extends \Com\Daw2\Core\BaseModel {
         }
     }
 
-    function add(string $id, string $nombre, string $idPadre): bool {
-        try {
-            $size = count($this->getAll());
-            if ($idPadre !== null && $idPadre !== '') {
-                $stmt = $this->pdo->prepare('INSERT INTO categoria(id_categoria, nombre_categoria, id_padre) values (?,?,?)');
-                $stmt->execute([
-                    $id, $nombre, $idPadre]
-                );
-            } else {
-                $stmt = $this->pdo->prepare('INSERT INTO categoria(id_categoria, nombre_categoria) values (?,?)');
-                $stmt->execute([
-                    $id, $nombre]
-                );
-            }
-
-            $new_size = count($this->getAll());
-
-            if (($size + 1) == $new_size) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (\PDOException $e) {
-            echo $e->getMessage();
-            return false;
-        }
-    }
-    /*
-    function idPadreOk(string $id): bool {
-        $stmt = $this->pdo->query('SELECT id_categoria FROM categoria');
-        $ids [] = $stmt->fetchAll();
-        foreach ($ids as $actual) {
-            if ($actual === $id) {
-                return true;
-            }
-        }
-        return false;
-    }
-     * 
-     */
-
-    function view(string $id): array {
-        $stmt = $this->pdo->prepare('SELECT * FROM categoria WHERE id_categoria=?');
-        $stmt->execute([$id]);
-        return $stmt->fetchAll();
+    function add(int $idCategoria, string $nombre, ?int $idPadre): bool {                           
+        $stmt = $this->pdo->prepare('INSERT INTO categoria(id_categoria, nombre_categoria, id_padre) values (?,?,?)');
+        return $stmt->execute([
+            $idCategoria, $nombre, $idPadre]
+        );
     }
 
     function showEdit(string $id): array {
