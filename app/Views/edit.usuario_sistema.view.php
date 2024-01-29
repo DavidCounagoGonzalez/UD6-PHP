@@ -29,8 +29,8 @@
                         </div>
                         <div class="mb-3 col-sm-6">
                             <label for="pass">Confirmar Contraseña</label>
-                            <input class="form-control" id="pass" type="password" name="pass" placeholder="Repite la contraseña" value="">
-                            <p class="text-danger"><?php echo isset($errores['pass']) ? $errores['pass'] : ''; ?></p>
+                            <input class="form-control" id="passRepe" type="password" name="passRepe" placeholder="Repite la contraseña" value="">
+                            <p class="text-danger"><?php echo isset($errores['passRepe']) ? $errores['passRepe'] : ''; ?></p>
                         </div>
                         <div class="mb-3 col-sm-4">
                             <label for="id_rol">Rol del usuario</label>
