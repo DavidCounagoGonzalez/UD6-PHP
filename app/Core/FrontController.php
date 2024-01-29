@@ -199,7 +199,7 @@ class FrontController {
         Route::add('/usuarios-sistema/add',
                 function () {
                     $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
-                    $controlador->userAdd();
+                    $controlador->processAdd();
                 }
                 , 'post');
 

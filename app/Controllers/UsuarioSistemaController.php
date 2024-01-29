@@ -35,10 +35,9 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
         $this->view->showViews(array('templates/header.view.php', 'edit.usuario_sistema.view.php', 'templates/footer.view.php'), $data);
     }
 
-    function userAdd() {
+    function processAdd() {
         $errores = $this->checkForm($_POST);
         if (count($errores) > 0) {
-            var_dump($errores);
             $rolModel = new \Com\Daw2\Models\AuxRolModel();
             $idiomaModel = new \Com\Daw2\Models\AuxIdiomaModel();
 

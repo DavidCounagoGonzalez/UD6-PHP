@@ -32,7 +32,7 @@
                             <input class="form-control" id="passRepe" type="password" name="passRepe" placeholder="Repite la contraseña" value="">
                             <p class="text-danger"><?php echo isset($errores['passRepe']) ? $errores['passRepe'] : ''; ?></p>
                         </div>
-                        <div class="mb-3 col-sm-4">
+                        <div class="mb-3 col-sm-6">
                             <label for="id_rol">Rol del usuario</label>
                             <select class="form-control select2-container--default" name="id_rol">
                                 <?php
@@ -47,7 +47,7 @@
                             </select>
                             <p class="text-danger"><?php echo isset($errores['id_rol']) ? $errores['id_rol'] : ''; ?></p>
                         </div>
-                        <div class="mb-3 col-sm-2">
+                        <div class="mb-3 col-sm-6">
                             <label for="idioma">Idioma</label>
                             <select class="form-control" name="idioma">                                
                                 <?php
