@@ -75,22 +75,18 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
 
     private function checkForm(array $post) {
         $errores = [];
-        if (strlen($post['nombre']) == 0) {
+        if (empty($post['nombre'])) {
             $errores['nombre'] = 'Debe introducir un nombre';
+        }else if(!preg_match('/[a-zA-Z_ ]{4}/', $post['nombre'])){
+            $errores['nombre'] = 'El nombre debe contener entre 4 y 255 caracteres y estar formado por letras, espacios o _';
         }
 
         if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
             $errores['email'] = 'El email no es válido';
         }
 
-        if (strlen($post['pass']) < 8) {
-            $errores['pass'] = 'La contraseña debe contener al menos 8 caracteres';
-        } else if (!preg_match('/.*[A-Z]/', $post['pass'])) {
-            $errores['pass'] .= 'La contraseña debe contener al menos una mayúscula.';
-        } else if (!preg_match('/.*[a-z]/', $post['pass'])) {
-            $errores['pass'] .= 'La contraseña debe contener al menos una minúscula.';
-        } else if (!preg_match('/.*[\d]+/', $post['pass'])) {
-            $errores['pass'] .= 'La contraseña debe contener al menos un dígito.';
+        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $post['pass'])) {
+            $errores['pass'] = 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y como mínimo 8 caracteres.';
         }
 
         if ($post['pass'] != $post['passRepe']) {
