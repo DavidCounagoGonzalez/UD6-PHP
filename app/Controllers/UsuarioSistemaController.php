@@ -87,10 +87,26 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
 
         if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/', $post['pass'])) {
             $errores['pass'] = 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y como mínimo 8 caracteres.';
-        }
-
-        if ($post['pass'] != $post['passRepe']) {
+        }else if ($post['pass'] != $post['passRepe']) {
             $errores['passRepe'] = 'Las contraseñas no coinciden';
+        }
+        
+        if(empty($post['id_rol'])){
+            $errores['id_rol'] = "Por favor, selecciona un rol";
+        }else{
+            $rolModel = new \Com\Daw2\Models\AuxRolModel();
+            if(filter_var($post['id_rol'], FILTER_VALIDATE_INT) || is_null($rolModel->loadRol($post['id_rol']))){
+                $errores['id_rol'] = 'Valor incorrecto';
+            }
+        }
+        
+        if(empty($post['idioma'])){
+            $errores['idioma'] = "Por favor, selecciona un pais";
+        }else{
+            $idiomaModel = new \Com\Daw2\Models\AuxIdiomaModel();
+            if(filter_var($post['idioma'], FILTER_VALIDATE_INT) || is_null($idiomaModel->loadIdioma($post['idioma']))){
+                $errores['idioma'] = 'Valor incorrecto';
+            }
         }
         
         return $errores;
