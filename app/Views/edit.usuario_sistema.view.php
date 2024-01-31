@@ -35,6 +35,7 @@
                         <div class="mb-3 col-sm-6">
                             <label for="id_rol">Rol del usuario</label>
                             <select class="form-control select2-container--default" name="id_rol">
+                                <option value="">-</option>
                                 <?php
                                 if (count($roles) > 0) {
                                     foreach ($roles as $r) {
@@ -49,12 +50,13 @@
                         </div>
                         <div class="mb-3 col-sm-6">
                             <label for="idioma">Idioma</label>
-                            <select class="form-control" name="idioma">                                
+                            <select class="form-control" name="idioma">
+                                <option value="">-</option>                                
                                 <?php
                                 if (count($idiomas) > 0) {
                                     foreach ($idiomas as $i) {
                                         ?>
-                                        <option value="<?php echo $i['id_idioma'] ?>" <?php echo (isset($input['id_idioma']) && $$input['id_idioma'] == $i['id_idioma']) ? 'selected' : ''; ?>><?php echo  $i['nombre_idioma'] ?></option>
+                                        <option value="<?php echo $i['id_idioma'] ?>" <?php echo (isset($input['idioma']) && $input['idioma'] == $i['id_idioma']) ? 'selected' : ''; ?>><?php echo  $i['nombre_idioma'] ?></option>
                                         <?php
                                     }
                                 }

@@ -55,8 +55,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             
             $modelo = new \Com\Daw2\Models\UsuarioSistemaModel();
             $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            if ($modelo->insertUsers($saneado)) {
-                
+            if ($modelo->insertUsers($saneado)) {  
                 header('location: /usuarios-sistema');
             } else {
                 $data = array(
@@ -95,7 +94,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             $errores['id_rol'] = "Por favor, selecciona un rol";
         }else{
             $rolModel = new \Com\Daw2\Models\AuxRolModel();
-            if(filter_var($post['id_rol'], FILTER_VALIDATE_INT) || is_null($rolModel->loadRol($post['id_rol']))){
+            if(!filter_var($post['id_rol'], FILTER_VALIDATE_INT) || is_null($rolModel->loadRol((int) $post['id_rol']))){
                 $errores['id_rol'] = 'Valor incorrecto';
             }
         }
@@ -104,7 +103,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             $errores['idioma'] = "Por favor, selecciona un pais";
         }else{
             $idiomaModel = new \Com\Daw2\Models\AuxIdiomaModel();
-            if(filter_var($post['idioma'], FILTER_VALIDATE_INT) || is_null($idiomaModel->loadIdioma($post['idioma']))){
+            if(!filter_var($post['idioma'], FILTER_VALIDATE_INT) || is_null($idiomaModel->loadIdioma((int) $post['idioma']))){
                 $errores['idioma'] = 'Valor incorrecto';
             }
         }
