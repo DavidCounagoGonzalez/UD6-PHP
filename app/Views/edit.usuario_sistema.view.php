@@ -50,19 +50,19 @@
                         </div>
                         <div class="mb-3 col-sm-6">
                             <label for="idioma">Idioma</label>
-                            <select class="form-control" name="idioma">
+                            <select class="form-control" name="id_idioma">
                                 <option value="">-</option>                                
                                 <?php
                                 if (count($idiomas) > 0) {
                                     foreach ($idiomas as $i) {
                                         ?>
-                                        <option value="<?php echo $i['id_idioma'] ?>" <?php echo (isset($input['idioma']) && $input['idioma'] == $i['id_idioma']) ? 'selected' : ''; ?>><?php echo  $i['nombre_idioma'] ?></option>
+                                        <option value="<?php echo $i['id_idioma'] ?>" <?php echo (isset($input['id_idioma']) && $input['id_idioma'] == $i['id_idioma']) ? 'selected' : ''; ?>><?php echo  $i['nombre_idioma'] ?></option>
                                         <?php
                                     }
                                 }
                                 ?>                              
                             </select>
-                            <p class="text-danger"><?php echo isset($errores['idioma']) ? $errores['idioma'] : ''; ?></p>
+                            <p class="text-danger"><?php echo isset($errores['id_idioma']) ? $errores['id_idioma'] : ''; ?></p>
                         </div>
                         <div class="col-12 text-right">                            
                             <input type="submit" value="Enviar" name="enviar" class="btn btn-primary"/>
