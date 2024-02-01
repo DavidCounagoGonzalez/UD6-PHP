@@ -30,12 +30,7 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel {
             'id_idioma' => $datos['id_idioma'],
             'id_usuario' => $id
         ];
-        
-        if($stmt->execute($vars)){
-            return $stmt->rowCount() <= 1;
-        }else{
-            return null;
-        }
+        return $stmt->execute($vars);
     }
     
     function updatePass(array $datos, int $id){
@@ -44,13 +39,9 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel {
           'pass' => password_hash($datos['pass'], PASSWORD_DEFAULT),
           'id_usuario'=> $id
         ];
-        if($stmt->execute($vars)){
-            return $stmt->rowCount() <= 1;
-        }else{
-            return null;
-        }
+        return $stmt->execute($vars);
     }
-
+    
 
     function loadByEmail(string $email) : ?array{
         $query = "SELECT * FROM usuario_sistema WHERE email = ?";
@@ -83,6 +74,16 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel {
             return $row;
         } else {
             return null;
+        }
+    }
+    
+    function deleteUsuarioSistema(int $id): ?bool{
+        $query = "DELETE FROM usuario_sistema WHERE id_usuario = ?";
+        $stmt = $this->pdo->prepare($query);
+        if($stmt->execute([$id])){
+            return true;
+        }else{
+            return false;
         }
     }
 }

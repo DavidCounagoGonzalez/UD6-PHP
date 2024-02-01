@@ -1,4 +1,13 @@
-<div class="row">           
+<div class="row">
+    <?php
+    if(isset($mensaje)){
+        ?>
+    <div class="col-12">
+        <div class="alert alert-<?php echo $mensaje['class']; ?>"><p><?php echo $mensaje['texto']; ?></p></div>
+    </div>
+    <?php
+    }
+    ?>
     <div class="col-12">
         <div class="card shadow mb-4">
             <div
