@@ -19,7 +19,7 @@
                         </div>
                         <div class="mb-3 col-sm-6">
                             <label for="email">Email</label>
-                            <input class="form-control" id="email" type="email" name="email" placeholder="miemail@dominio.org" value="<?php echo isset($input['email']) ? $input['email'] : ''; ?>">
+                            <input class="form-control" id="email" type="text" name="email" placeholder="miemail@dominio.org" value="<?php echo isset($input['email']) ? $input['email'] : ''; ?>">
                             <p class="text-danger"><?php echo isset($errores['email']) ? $errores['email'] : ''; ?></p>
                         </div>
                         <div class="mb-3 col-sm-6">

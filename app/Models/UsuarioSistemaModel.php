@@ -64,7 +64,6 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel {
         
     }
 
-
     function loadByUser(int $id) : ?array{
         $query = "SELECT * FROM usuario_sistema WHERE id_usuario = ?";
         $stmt = $this->pdo->prepare($query);
@@ -72,6 +71,17 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel {
         if($row = $stmt->fetch()){
             return $row;
         }else{
+            return null;
+        }
+    }
+    
+    function getEditEmail(array $data, int $id): ?array {
+        $stmt = $this->pdo->prepare("SELECT * FROM usuario_sistema us WHERE us.email =? AND us.id_usuario !=?");
+        $stmt->execute([$data['email'], $id]);
+
+        if ($row = $stmt->fetch()) {
+            return $row;
+        } else {
             return null;
         }
     }

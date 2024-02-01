@@ -96,7 +96,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
     }
 
     function processEdit(int $id){
-        $errores = $this->checkForm($_POST);
+        $errores = $this->checkUpdate($_POST, $id);
         $modelo = new \Com\Daw2\Models\UsuarioSistemaModel();
         $rolModel = new \Com\Daw2\Models\AuxRolModel();
         $idiomaModel = new \Com\Daw2\Models\AuxIdiomaModel();
@@ -112,7 +112,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
                 'tituloDiv' => 'Editar usuarios',
                 'roles' => $rolModel->getAll(),
                 'idiomas' => $idiomaModel->getAll(),
-                'input' => $modelo->loadByUser($id),
+                'input' => $_POST,
                 'errores' => $errores
             );
             $this->view->showViews(array('templates/header.view.php', 'edit.usuario_sistema.view.php', 'templates/footer.view.php'), $data);
@@ -163,8 +163,8 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             $errores['email'] = 'El email no es válido';
         }else{
             $model = new \Com\Daw2\Models\UsuarioSistemaModel();
-            $usuario = $model->loadByUser($id);
-            if($usuario['email'] != $post['email']){
+            $usuario = $model->getEditEmail($post, $id);
+            if(!is_null($usuario)){
                 $errores['email'] = 'El email introducido está en uso.';
             }
         }
