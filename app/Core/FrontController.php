@@ -224,6 +224,13 @@ class FrontController {
                     $controlador->processDelete($id);
                 }
                 , 'get');
+                
+        Route::add('/usuarios-sistema/baja/([0-9]+)',
+                function ($id) {
+                    $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                    $controlador->processBaja($id);
+                }
+                , 'get');
             
         Route::pathNotFound(
             function () {

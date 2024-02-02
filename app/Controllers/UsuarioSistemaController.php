@@ -14,9 +14,9 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
         $modelo = new \Com\Daw2\Models\UsuarioSistemaModel();
         $data['usuarios'] = $modelo->getAll();
         
-        if(isset($_SESSION['mensaje_delete'])){
-            $data['mensaje'] = $_SESSION['mensaje_productos'];
-            unset($_SESSION['mensaje_delete']);
+        if(isset($_SESSION['mensaje'])){
+            $data['mensaje'] = $_SESSION['mensaje'];
+            unset($_SESSION['mensaje']);
         }
 
         $this->view->showViews(array('templates/header.view.php', 'usuario_sistema.view.php', 'templates/footer.view.php'), $data);
@@ -147,14 +147,43 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
     public function processDelete(int $id){
         $modelo = new \Com\Daw2\Models\UsuarioSistemaModel();
         if($modelo->deleteUsuarioSistema($id)){
-            $_SESSION['mensaje_delete'] = array(
+            $_SESSION['mensaje'] = array(
               'class' => 'success',
               'texto' => 'El usuario se ha eliminado con éxito.'
             );
         }else{
-            $_SESSION['mensaje_delete'] = array(
+            $_SESSION['mensaje'] = array(
               'class' => 'danger',
               'texto' => 'El usuario nose ha podido eliminar.'
+            );
+        }
+        header('location: /usuarios-sistema');
+    }
+    
+    public function processBaja(int $id){
+        $modelo = new \Com\Daw2\Models\UsuarioSistemaModel();
+        $usuarioActual = $modelo->loadByUser($id);
+        if(!is_null($usuarioActual)){
+            if($usuarioActual['baja'] == 0){
+                $baja = 1;
+            }else{
+                $baja = 0;
+            }
+            if($modelo->baja($id, $baja)){
+            $_SESSION['mensaje'] = array(
+              'class' => 'success',
+              'texto' => 'El usuario se ha dado de baja con éxito.'   
+            );
+            }else{
+              $_SESSION['mensaje'] = array(
+              'class' => 'success',
+              'texto' => 'El usuario no se ha dado de baja.'   
+            ); 
+            }
+        }else{
+            $_SESSION['mensaje'] = array(
+              'class' => 'warning',
+              'texto' => 'El usuario no existe.'
             );
         }
         header('location: /usuarios-sistema');

@@ -77,10 +77,20 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel {
         }
     }
     
-    function deleteUsuarioSistema(int $id): ?bool{
+    function deleteUsuarioSistema(int $id): bool{
         $query = "DELETE FROM usuario_sistema WHERE id_usuario = ?";
         $stmt = $this->pdo->prepare($query);
-        if($stmt->execute([$id])){
+        if($stmt->execute([$id]) && $stmt->rowCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    function baja(int $id, int $estado): bool{
+        $query = "UPDATE usuario_sistema SET baja=? WHERE id_usuario = ?";
+        $stmt = $this->pdo->prepare($query);
+        if($stmt->execute([$estado, $id]) && $stmt->rowCount() > 0){
             return true;
         }else{
             return false;
