@@ -50,7 +50,7 @@
                             <td><a href="mailto: <?php echo $u['email']; ?>"><?php echo $u['email']; ?></a></td>
                             <td><?php echo $u['nombre_rol']; ?></td>                            
                             <td><?php echo $u['nombre_idioma']; ?></td>   
-                            <td><?php echo $u['last_date']; ?></td>                                                                             
+                            <td><?php echo (new DateTimeImmutable($u['last_date']))->format('d/m/Y H:i:s'); ?></td>                                                                             
                             <td>                              
                                 <a href="/usuarios-sistema/view/<?php echo $u['id_usuario']; ?>" class="btn btn-default ml-1"><i class="fas fa-eye"></i></a>
                                 <a href="/usuarios-sistema/edit/<?php echo $u['id_usuario']; ?>" class="btn btn-success ml-1"><i class="fas fa-edit"></i></a>

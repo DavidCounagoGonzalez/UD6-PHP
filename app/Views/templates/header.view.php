@@ -94,7 +94,7 @@
           <img src="assets/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="<?php echo isset($_SESSION['usuario']['id_usuario']) ? '/profile/'.$_SESSION['usuario']['id_usuario'] : '/login';?>"
+          <a href="#"
                 class="d-block"> <?php echo isset($_SESSION['usuario']['nombre']) ? $_SESSION['usuario']['nombre'] : '<i>Sin establecer</i>';?> </a>    
         </div>
       </div>

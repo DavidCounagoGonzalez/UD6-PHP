@@ -7,7 +7,21 @@ use Steampixel\Route;
 class FrontController {
 
     static function main() {
+        
+        Route::add('/login',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                $controlador->mostrarLogin();
+            }
+            , 'get');
             
+        Route::add('/login',
+            function () {
+                $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                $controlador->verificaLogin();
+            }
+            , 'post'); 
+        
         Route::add('/',
             function () {
                 $controlador = new \Com\Daw2\Controllers\InicioController();
