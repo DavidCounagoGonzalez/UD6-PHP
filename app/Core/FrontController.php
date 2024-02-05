@@ -29,12 +29,6 @@ class FrontController {
                     }
             );
 
-            Route::methodNotAllowed(
-                    function () {
-                        $controller = new \Com\Daw2\Controllers\ErroresController();
-                        $controller->error405();
-                    }
-            );
         } else {
 
             Route::add('/',
