@@ -7,7 +7,11 @@ namespace Com\Daw2\Controllers;
 class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
 
     function mostrarLogin() {
-        $this->view->show('Login.php');
+        if(isset($_SESSION['usuario'])){
+            header('location: /');
+        }else{
+            $this->view->show('Login.php');
+        }
     }
 
     function verificaLogin() {
@@ -20,7 +24,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
                     unset($usuario['pass']);
                     $modelo->ultimoInicio($usuario['id_usuario']);
                     $_SESSION['usuario'] = $usuario;
-                    header('location: /usuarios-sistema');
+                    header('location: /');
                 } else {
                     $errores['pass'] = 'Datos de acceso incorrectos';
                 }
