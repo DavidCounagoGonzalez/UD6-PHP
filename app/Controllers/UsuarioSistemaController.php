@@ -23,7 +23,9 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
                 if (password_verify($_POST['pass'], $usuario['pass'])) {
                     unset($usuario['pass']);
                     $modelo->ultimoInicio($usuario['id_usuario']);
+                    $permisos = $this->processPermisos($usuario['id_usuario']);
                     $_SESSION['usuario'] = $usuario;
+                    $_SESSION['permisos'] = $permisos;
                     header('location: /');
                 } else {
                     $errores['pass'] = 'Datos de acceso incorrectos';
@@ -36,6 +38,24 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
         $data['errores'] = $errores;
         $data['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
         $this->view->show('Login.php', $data);
+    }
+    
+    function processPermisos(int $id) :array{
+        $modelo = new \Com\Daw2\Models\AuxRolModel();
+        $rol = $modelo->loadRol($id);
+        $permisos = [];
+        if($rol == 'administrador'){
+            $permisos['todo'] = true;
+        }else if($rol == 'auditor'){
+            $permisos['lectura'] = true;
+            $permisos['todo'] = true;
+        }else if($rol == 'productos'){
+            $permisos['escritura'] = true;
+            $permisos['lectura'] = true;
+            $permisos['productos'] = true;
+        }
+        
+        return $permisos;
     }
 
     function mostrarTodos() {
