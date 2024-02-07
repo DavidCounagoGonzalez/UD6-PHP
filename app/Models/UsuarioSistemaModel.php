@@ -90,10 +90,14 @@ class UsuarioSistemaModel extends \Com\Daw2\Core\BaseModel {
     }
 
     function baja(int $id, int $estado): bool {
-        $query = "UPDATE usuario_sistema SET baja=? WHERE id_usuario = ?";
-        $stmt = $this->pdo->prepare($query);
-        if ($stmt->execute([$estado, $id]) && $stmt->rowCount() > 0) {
-            return true;
+        if ($id !== $_SESSION['usuario']['id_usuario']) {
+            $query = "UPDATE usuario_sistema SET baja=? WHERE id_usuario = ?";
+            $stmt = $this->pdo->prepare($query);
+            if ($stmt->execute([$estado, $id]) && $stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

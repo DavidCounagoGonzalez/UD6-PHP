@@ -238,12 +238,12 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             if ($modelo->baja($id, $baja)) {
                 $_SESSION['mensaje'] = array(
                     'class' => 'success',
-                    'texto' => 'El usuario se ha dado de baja con éxito.'
+                    'texto' => 'El estado de baja se ha modificado con éxito.'
                 );
             } else {
                 $_SESSION['mensaje'] = array(
-                    'class' => 'success',
-                    'texto' => 'El usuario no se ha dado de baja.'
+                    'class' => 'danger',
+                    'texto' => 'No se ha podido modificar la baja del usuario.'
                 );
             }
         } else {
