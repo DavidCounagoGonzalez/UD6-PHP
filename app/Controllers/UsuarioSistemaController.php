@@ -23,7 +23,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
                 if (password_verify($_POST['pass'], $usuario['pass'])) {
                     unset($usuario['pass']);
                     $modelo->ultimoInicio($usuario['id_usuario']);
-                    $permisos = $this->processPermisos($usuario['id_usuario']);
+                    $permisos = $this->processPermisos($usuario['id_rol']);
                     $_SESSION['usuario'] = $usuario;
                     $_SESSION['permisos'] = $permisos;
                     header('location: /');
@@ -44,17 +44,64 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
         $modelo = new \Com\Daw2\Models\AuxRolModel();
         $rol = $modelo->loadRol($id);
         $permisos = [];
-        if($rol == 'administrador'){
-            $permisos['todo'] = true;
-        }else if($rol == 'auditor'){
-            $permisos['lectura'] = true;
-            $permisos['todo'] = true;
-        }else if($rol == 'productos'){
-            $permisos['escritura'] = true;
-            $permisos['lectura'] = true;
-            $permisos['productos'] = true;
+        if($rol['nombre_rol'] == 'administrador'){
+            $permisos = array(
+                'productos' => array(
+                    'lectura' => true,
+                    'escritura' =>true
+                ),
+                'categorias' => array(
+                    'lectura' => true,
+                    'escritura' =>false
+                ),
+                'proveedores' => array(
+                    'lectura' => true,
+                    'escritura' =>true
+                ),
+                'usuarios' => array(
+                    'lectura' => true,
+                    'escritura' =>true
+                )
+            );
+        }else if($rol['nombre_rol'] == 'auditor'){
+            $permisos = array(
+                'productos' => array(
+                    'lectura' => true,
+                    'escritura' =>false
+                ),
+                'categorias' => array(
+                    'lectura' => true,
+                    'escritura' =>false
+                ),
+                'proveedores' => array(
+                    'lectura' => true,
+                    'escritura' =>false
+                ),
+                'usuarios' => array(
+                    'lectura' => true,
+                    'escritura' =>false
+                )
+            );
+        }else if($rol['nombre_rol'] == 'productos'){
+            $permisos = array(
+                'productos' => array(
+                    'lectura' => true,
+                    'escritura' =>true
+                ),
+                'categorias' => array(
+                    'lectura' => false,
+                    'escritura' =>false
+                ),
+                'proveedores' => array(
+                    'lectura' => false,
+                    'escritura' =>false
+                ),
+                'usuarios' => array(
+                    'lectura' => false,
+                    'escritura' =>false
+                )
+            );
         }
-        
         return $permisos;
     }
 

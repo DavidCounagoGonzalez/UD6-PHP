@@ -28,7 +28,6 @@ class FrontController {
                         header('location: /login');
                     }
             );
-
         } else {
 
             Route::add('/',
@@ -38,64 +37,68 @@ class FrontController {
                     }
                     , 'get');
 
-            # Gestion de categorías           
-            Route::add('/categorias',
-                    function () {
-                        $controlador = new \Com\Daw2\Controllers\CategoriaController();
-                        $controlador->mostrarTodos();
-                    }
-                    , 'get');
+            # Gestion de categorías 
+                if ($_SESSION['permisos']['categorias']['lectura']) {
+                    Route::add('/categorias',
+                            function () {
+                                $controlador = new \Com\Daw2\Controllers\CategoriaController();
+                                $controlador->mostrarTodos();
+                            }
+                            , 'get');
 
-            Route::add('/categorias/view/([A-Za-z0-9]+)',
-                    function ($id) {
-                        $controlador = new \Com\Daw2\Controllers\CategoriaController();
-                        $controlador->view($id);
-                    }
-                    , 'get');
+                    Route::add('/categorias/view/([A-Za-z0-9]+)',
+                            function ($id) {
+                                $controlador = new \Com\Daw2\Controllers\CategoriaController();
+                                $controlador->view($id);
+                            }
+                            , 'get');
+                }
+                if ($_SESSION['permisos']['categorias']['escritura']) {
+                    Route::add('/categorias/delete/([A-Za-z0-9]+)',
+                            function ($id) {
+                                $controlador = new \Com\Daw2\Controllers\CategoriaController();
+                                $controlador->delete($id);
+                            }
+                            , 'get');
 
-            Route::add('/categorias/delete/([A-Za-z0-9]+)',
-                    function ($id) {
-                        $controlador = new \Com\Daw2\Controllers\CategoriaController();
-                        $controlador->delete($id);
-                    }
-                    , 'get');
+                    Route::add('/categorias/edit/([A-Za-z0-9]+)',
+                            function ($id) {
+                                $controlador = new \Com\Daw2\Controllers\CategoriaController();
+                                $controlador->mostrarEdit($id);
+                            }
+                            , 'get');
 
-            Route::add('/categorias/edit/([A-Za-z0-9]+)',
-                    function ($id) {
-                        $controlador = new \Com\Daw2\Controllers\CategoriaController();
-                        $controlador->mostrarEdit($id);
-                    }
-                    , 'get');
+                    Route::add('/categorias/edit/([A-Za-z0-9]+)',
+                            function ($id) {
+                                $controlador = new \Com\Daw2\Controllers\CategoriaController();
+                                $controlador->edit($id);
+                            }
+                            , 'post');
 
-            Route::add('/categorias/edit/([A-Za-z0-9]+)',
-                    function ($id) {
-                        $controlador = new \Com\Daw2\Controllers\CategoriaController();
-                        $controlador->edit($id);
-                    }
-                    , 'post');
+                    Route::add('/categorias/add',
+                            function () {
+                                $controlador = new \Com\Daw2\Controllers\CategoriaController();
+                                $controlador->mostrarAdd();
+                            }
+                            , 'get');
 
-            Route::add('/categorias/add',
-                    function () {
-                        $controlador = new \Com\Daw2\Controllers\CategoriaController();
-                        $controlador->mostrarAdd();
-                    }
-                    , 'get');
+                    Route::add('/categorias/add',
+                            function () {
+                                $controlador = new \Com\Daw2\Controllers\CategoriaController();
+                                $controlador->add();
+                            }
+                            , 'post');
 
-            Route::add('/categorias/add',
-                    function () {
-                        $controlador = new \Com\Daw2\Controllers\CategoriaController();
-                        $controlador->add();
-                    }
-                    , 'post');
-
-            Route::add('/categorias/cant_add',
-                    function () {
-                        $controlador = new \Com\Daw2\Controllers\CategoriaController();
-                        $controlador->cant_add();
-                    }
-                    , 'get');
+                    Route::add('/categorias/cant_add',
+                            function () {
+                                $controlador = new \Com\Daw2\Controllers\CategoriaController();
+                                $controlador->cant_add();
+                            }
+                            , 'get');
+                }
 
             # Gestion de productos
+            if($_SESSION['permisos']['productos']['lectura']){
             Route::add('/productos',
                     function () {
                         $controlador = new \Com\Daw2\Controllers\ProductoController();
@@ -108,7 +111,9 @@ class FrontController {
                         $controlador->view($codigo);
                     }
                     , 'get');
-
+            }
+            
+            if($_SESSION['permisos']['productos']['escritura']){
             Route::add('/productos/delete/([A-Za-z0-9]+)',
                     function ($codigo) {
                         $controlador = new \Com\Daw2\Controllers\ProductoController();
@@ -143,9 +148,9 @@ class FrontController {
                         $controlador->processAdd();
                     }
                     , 'post');
-
+            }
             # Gestion de proveedores
-
+            if($_SESSION['permisos']['proveedores']['lectura']){
             Route::add('/proveedores',
                     function () {
                         $controlador = new \Com\Daw2\Controllers\ProveedorController();
@@ -159,7 +164,9 @@ class FrontController {
                         $controlador->view($cif);
                     }
                     , 'get');
-
+            }
+            
+            if($_SESSION['permisos']['proveedores']['escritura']){
             Route::add('/proveedores/delete/([A-Za-z0-9]+)',
                     function ($cif) {
                         $controlador = new \Com\Daw2\Controllers\ProveedorController();
@@ -201,14 +208,18 @@ class FrontController {
                         $controlador->cant_add();
                     }
                     , 'get');
-
+            }
+            
+            if($_SESSION['permisos']['usuarios']['lectura']){
             Route::add('/usuarios-sistema',
                     function () {
                         $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
                         $controlador->mostrarTodos();
                     }
                     , 'get');
-
+            }
+            
+            if($_SESSION['permisos']['usuarios']['escritura']){
             Route::add('/usuarios-sistema/add',
                     function () {
                         $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
@@ -250,7 +261,8 @@ class FrontController {
                         $controlador->processBaja($id);
                     }
                     , 'get');
-
+            }
+            
             Route::add('/login',
                     function () {
                         header('location: /');
