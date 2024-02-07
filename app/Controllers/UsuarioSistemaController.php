@@ -40,67 +40,25 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
         $this->view->show('Login.php', $data);
     }
     
-    function processPermisos(int $id) :array{
+    private function processPermisos(int $id_rol) :array{
         $modelo = new \Com\Daw2\Models\AuxRolModel();
-        $rol = $modelo->loadRol($id);
-        $permisos = [];
+        $rol = $modelo->loadRol($id_rol);
+        $permisos = [
+            'productos' => '',
+            'categorias' => '',
+            'proveedores' => '',
+            'usuarios' => ''
+        ];
         if($rol['nombre_rol'] == 'administrador'){
-            $permisos = array(
-                'productos' => array(
-                    'lectura' => true,
-                    'escritura' =>true
-                ),
-                'categorias' => array(
-                    'lectura' => true,
-                    'escritura' =>true
-                ),
-                'proveedores' => array(
-                    'lectura' => true,
-                    'escritura' =>true
-                ),
-                'usuarios' => array(
-                    'lectura' => true,
-                    'escritura' =>true
-                )
-            );
+            foreach ($permisos as $key => $value) {
+                $permisos[$key] = "rwd";    
+            }
         }else if($rol['nombre_rol'] == 'auditor'){
-            $permisos = array(
-                'productos' => array(
-                    'lectura' => true,
-                    'escritura' =>false
-                ),
-                'categorias' => array(
-                    'lectura' => true,
-                    'escritura' =>false
-                ),
-                'proveedores' => array(
-                    'lectura' => true,
-                    'escritura' =>false
-                ),
-                'usuarios' => array(
-                    'lectura' => true,
-                    'escritura' =>false
-                )
-            );
+            foreach ($permisos as $key => $value) {
+                $permisos[$key] = "r";    
+            }
         }else if($rol['nombre_rol'] == 'productos'){
-            $permisos = array(
-                'productos' => array(
-                    'lectura' => true,
-                    'escritura' =>true
-                ),
-                'categorias' => array(
-                    'lectura' => false,
-                    'escritura' =>false
-                ),
-                'proveedores' => array(
-                    'lectura' => false,
-                    'escritura' =>false
-                ),
-                'usuarios' => array(
-                    'lectura' => false,
-                    'escritura' =>false
-                )
-            );
+            $permisos['productos'] = "rwd";
         }
         return $permisos;
     }
