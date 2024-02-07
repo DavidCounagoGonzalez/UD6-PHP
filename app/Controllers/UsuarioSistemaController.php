@@ -52,7 +52,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
                 ),
                 'categorias' => array(
                     'lectura' => true,
-                    'escritura' =>false
+                    'escritura' =>true
                 ),
                 'proveedores' => array(
                     'lectura' => true,
