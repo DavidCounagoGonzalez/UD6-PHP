@@ -99,7 +99,7 @@ class FrontController {
             }
 
             # Gestion de productos
-            if (strpos($_SESSION['permisos']['productos'], 'r') !== false)  {
+            if (strpos($_SESSION['permisos']['productos'], 'r') !== false) {
                 Route::add('/productos',
                         function () {
                             $controlador = new \Com\Daw2\Controllers\ProductoController();
@@ -176,7 +176,7 @@ class FrontController {
                         }
                         , 'get');
             }
-            if (strpos($_SESSION['permisos']['proveedores'], 'w') !== false){
+            if (strpos($_SESSION['permisos']['proveedores'], 'w') !== false) {
                 Route::add('/proveedores/edit/([A-Za-z0-9]+)',
                         function ($cif) {
                             $controlador = new \Com\Daw2\Controllers\ProveedorController();
@@ -229,7 +229,7 @@ class FrontController {
                             $controlador->mostrarAdd();
                         }
                         , 'get');
-           
+
                 Route::add('/usuarios-sistema/add',
                         function () {
                             $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
@@ -250,16 +250,15 @@ class FrontController {
                             $controlador->processEdit($id);
                         }
                         , 'post');
-                        
+
                 Route::add('/usuarios-sistema/baja/([0-9]+)',
                         function ($id) {
                             $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
                             $controlador->processBaja($id);
                         }
                         , 'get');
-                
-                }
-            if (strpos($_SESSION['permisos']['usuarios'], 'w') !== false){
+            }
+            if (strpos($_SESSION['permisos']['usuarios'], 'w') !== false) {
                 Route::add('/usuarios-sistema/delete/([0-9]+)',
                         function ($id) {
                             $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
@@ -267,6 +266,13 @@ class FrontController {
                         }
                         , 'get');
             }
+
+            Route::add('/logout',
+                    function () {
+                        $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                        $controlador->logout();
+                    }
+            );
 
             Route::add('/login',
                     function () {

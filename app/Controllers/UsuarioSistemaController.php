@@ -7,9 +7,9 @@ namespace Com\Daw2\Controllers;
 class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
 
     function mostrarLogin() {
-        if(isset($_SESSION['usuario'])){
+        if (isset($_SESSION['usuario'])) {
             header('location: /');
-        }else{
+        } else {
             $this->view->show('Login.php');
         }
     }
@@ -39,8 +39,14 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
         $data['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
         $this->view->show('Login.php', $data);
     }
-    
-    private function processPermisos(int $id_rol) :array{
+
+    function logout() {
+        if (session_destroy()) {
+            header('location: /login');
+        }
+    }
+
+    private function processPermisos(int $id_rol): array {
         $modelo = new \Com\Daw2\Models\AuxRolModel();
         $rol = $modelo->loadRol($id_rol);
         $permisos = [
@@ -49,16 +55,20 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             'proveedores' => '',
             'usuarios' => ''
         ];
-        if($rol['nombre_rol'] == 'administrador'){
+        if ($rol['nombre_rol'] == 'administrador') {
             foreach ($permisos as $key => $value) {
-                $permisos[$key] = "rwd";    
+                $permisos[$key] = "rwd";
             }
-        }else if($rol['nombre_rol'] == 'auditor'){
+        } else if ($rol['nombre_rol'] == 'auditor') {
             foreach ($permisos as $key => $value) {
-                $permisos[$key] = "r";    
+                $permisos[$key] = "r";
             }
-        }else if($rol['nombre_rol'] == 'productos'){
+        } else if ($rol['nombre_rol'] == 'productos') {
             $permisos['productos'] = "rwd";
+        } else if ($rol['nombre_rol'] == 'categorias') {
+            $permisos['categorias'] = "rwd";
+        } else if ($rol['nombre_rol'] == 'proveedores') {
+            $permisos['proveedores'] = "rwd";
         }
         return $permisos;
     }
@@ -210,7 +220,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
         } else {
             $_SESSION['mensaje'] = array(
                 'class' => 'danger',
-                'texto' => 'El usuario nose ha podido eliminar.'
+                'texto' => 'El usuario no se ha podido eliminar.'
             );
         }
         header('location: /usuarios-sistema');
