@@ -143,6 +143,31 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             }
         }
     }
+    
+    function mostrarView(int $id){
+        $data = [];
+        $modelo = new \Com\Daw2\Models\UsuarioSistemaModel();
+        $input = $modelo->loadByUser($id);
+        if (is_null($input)) {
+            header('location: /usuarios-sistema');
+        } else {
+            $data['titulo'] = 'Editar Usuario';
+            $data['seccion'] = '/usuarios-sistema/edit/' . $id;
+            $data['tituloDiv'] = 'Editar Usuario';
+
+            $rolModel = new \Com\Daw2\Models\AuxRolModel();
+            $data['roles'] = $rolModel->getAll();
+
+            $idiomaModel = new \Com\Daw2\Models\AuxIdiomaModel();
+            $data['idiomas'] = $idiomaModel->getAll();
+
+            $data['input'] = $input;
+            
+            $data['readonly'] = true;
+
+            $this->view->showViews(array('templates/header.view.php', 'edit.usuario_sistema.view.php', 'templates/footer.view.php'), $data);
+        }
+    }
 
     function mostrarEdit(int $id) {
         $data = [];

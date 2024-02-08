@@ -220,8 +220,15 @@ class FrontController {
                             $controlador->mostrarTodos();
                         }
                         , 'get');
+                
+                Route::add('/usuarios-sistema/view/([0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioSistemaController();
+                            $controlador->mostrarView($id);
+                        }
+                        , 'get');
+                
             }
-
             if (strpos($_SESSION['permisos']['usuarios'], 'w') !== false) {
                 Route::add('/usuarios-sistema/add',
                         function () {
