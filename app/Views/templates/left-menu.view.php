@@ -20,27 +20,31 @@
                 </a>
 
                     <ul class="nav nav-treeview">
+                        <?php if($_SESSION['permisos']['usuarios'] != ''){?>
                         <li class="nav-item">
                             <a href="/usuarios-sistema" class="nav-link <?php echo isset($seccion) && $seccion === '/usuarios-sistema' ? 'active' : ''; ?>">
                                 <i class="fas fa-users nav-icon"></i>
                                 <p>Usuarios del Sistema</p>
                             </a>
                         </li>
-
+                        <?php } ?>
+                        <?php if($_SESSION['permisos']['productos'] != ''){?>
                         <li class="nav-item">
                             <a href="/productos" class="nav-link <?php echo isset($seccion) && $seccion === '/productos' ? 'active' : ''; ?>">
                                 <i class="fas fa-shopping-bag nav-icon"></i>
                                 <p>Productos</p>
                             </a>
                         </li>
-
+                        <?php } ?>
+                        <?php if($_SESSION['permisos']['categorias'] != ''){?>
                         <li class="nav-item">
                             <a href="/categorias" class="nav-link <?php echo isset($seccion) && $seccion === '/categorias' ? 'active' : ''; ?>">
                                 <i class="fas fa-folder nav-icon"></i>
                                 <p>Categorías</p>
                             </a>
                         </li>
-
+                        <?php } ?>
+                        <?php if($_SESSION['permisos']['proveedores'] != ''){?>
                         <li class="nav-item">
                             <a href="/proveedores" class="nav-link <?php echo isset($seccion) && $seccion === '/proveedores' ? 'active' : ''; ?>">
                                 <i class="fas fa-handshake nav-icon"></i>
@@ -48,7 +52,7 @@
                             </a>
                         </li>
                         <?php
-                    
+                        }
                     ?>
 
                 </ul>
