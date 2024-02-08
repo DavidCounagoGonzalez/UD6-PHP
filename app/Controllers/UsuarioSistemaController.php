@@ -67,7 +67,7 @@ class UsuarioSistemaController extends \Com\Daw2\Core\BaseController {
             $permisos['productos'] = "rwd";
         } else if ($rol['nombre_rol'] == 'categorias') {
             $permisos['categorias'] = "rwd";
-        } else if ($rol['nombre_rol'] == 'proveedores') {
+        } else if ($rol['nombre_rol'] == 'proveedor') {
             $permisos['proveedores'] = "rwd";
         }
         return $permisos;
