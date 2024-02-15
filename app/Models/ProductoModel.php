@@ -64,4 +64,59 @@ class ProductoModel extends \Com\Daw2\Core\BaseModel {
             return false;
         }
     }
+    
+    public function getByFiltros($filtros): array {
+        $consulta = self::SELECT_FROM;
+        
+        $informacion = $this->filtrado($filtros);
+        
+        if(!empty($informacion['param'])){
+            $consulta .= " WHERE ".implode(" AND ", $informacion['condiciones']);
+            $stmt = $this->pdo->prepare($consulta);
+            $stmt->execute($informacion['param']);
+            return $stmt->fetchAll();
+        }else{
+            $stmt = $this->pdo->query($consulta);
+            return $stmt->fetchAll();
+        }
+    }
+
+
+    private function filtrado($filtros): array {
+        $condiciones = [];
+        $param = [];;
+        
+        if(!empty($filtros['codigo'])){
+            $condiciones[] = "producto.codigo LIKE :codigo";
+            $param['codigo'] = '%' .$filtros["codigo"]. '%';
+        }
+        
+        if(!empty($filtros['nombre'])){
+            $condiciones[] = 'producto.nombre LIKE :nombre';
+            $param['nombre'] = '%' .$filtros["nombre"]. '%';
+        }
+        
+        if(!empty($filtros['id_categoria']) && filter_var($filtros['id_categoria'], FILTER_VALIDATE_INT)){
+            $condiciones[] = 'producto.id_categoria = :id_categoria';
+            $param['id_categoria'] = $filtros['id_categoria'];
+        }
+        
+        if(!empty($filtros['min_pvp']) && filter_var($filtros['min_pvp'], FILTER_VALIDATE_FLOAT)){
+            $condiciones[] = '(coste * margen * (1 + iva/100 )) >= :min_pvp';
+            $param['min_pvp'] = $filtros['min_pvp'];
+        }
+        
+        if(!empty($filtros['max_pvp']) && filter_var($filtros['max_pvp'], FILTER_VALIDATE_FLOAT)){
+            $condiciones[] = '(coste * margen * (1 + iva/100 )) <= :max_pvp';
+            $param['max_pvp'] = $filtros['max_pvp'];
+        }
+        
+        $informacion = array(
+            "condiciones" => $condiciones,
+            "param" => $param
+        );
+        
+        return $informacion;
+        
+    }
 }

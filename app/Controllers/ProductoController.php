@@ -14,7 +14,13 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
         $data['seccion'] = '/productos';
         
         $modelo = new \Com\Daw2\Models\ProductoModel();
-        $data['productos'] = $modelo->getAll();
+        $data['productos'] = $modelo->getByFiltros($_GET);
+        
+        $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
+        $data['categorias'] = $categoriaModel->getAll();
+        
+        $input = filter_var_array($_GET, FILTER_SANITIZE_SPECIAL_CHARS);
+        $data['input'] = $input;
         
         if(isset($_SESSION['mensaje_productos'])){
             $data['mensaje'] = $_SESSION['mensaje_productos'];
